@@ -14,9 +14,7 @@
       </div>
       <div class="score total">
         <span class="label">正确率</span>
-        <span class="value"
-          >{{ words.length > 0 ? ((correctCount / words.length) * 100).toFixed(0) : 0 }}%</span
-        >
+        <span class="value">{{ words.length > 0 ? ((correctCount / words.length) * 100).toFixed(0) : 0 }}%</span>
       </div>
     </div>
     <button class="btn-restart" (click)="restart()">重新开始</button>
@@ -43,26 +41,15 @@
       <div class="word-display">
         <!-- <h2>{{ currentWord }}</h2> -->
         <button class="audio-btn" (click)="wordAudio.play()">🔊</button>
-        <audio
-          #wordAudio
-          [src]="'bookcase/power_up_level_0/audio/' + currentWord + '.mp3'"
-          autoplay
-        ></audio>
+        <audio #wordAudio [src]="'bookcase/power_up_level_0/audio/' + currentWord + '.mp3'" autoplay></audio>
       </div>
 
       <!-- Letter Slots (Drop Zone) -->
       <div class="letter-slots">
         @for(slot of letterSlots; track slot; let i = $index) {
-        <div
-          class="slot"
-          [class.filled]="slot.filled"
-          [class.correct]="showResult && userAnswer[i] === currentWord[i]"
-          [class.wrong]="showResult && slot.filled && userAnswer[i] !== currentWord[i]"
-          cdkDropList
-          [cdkDropListData]="[slot.letter]"
-          (cdkDropListDropped)="dropToSlot($event, i)"
-          (click)="removeFromSlot(i)"
-        >
+        <div class="slot" [class.filled]="slot.filled" [class.correct]="showResult && userAnswer[i] === currentWord[i]"
+          [class.wrong]="showResult && slot.filled && userAnswer[i] !== currentWord[i]" cdkDropList
+          [cdkDropListData]="[slot.letter]" (cdkDropListDropped)="dropToSlot($event, i)" (click)="removeFromSlot(i)">
           {{ slot.letter }}
         </div>
         }
