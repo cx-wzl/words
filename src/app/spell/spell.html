@@ -1,0 +1,100 @@
+<div class="spell-container">
+  <!-- Game Finished Screen -->
+  <div class="game-finished" *ngIf="gameFinished">
+    <h1>🎉 游戏结束!</h1>
+    <div class="score-board">
+      <div class="score correct">
+        <span class="label">正确</span>
+        <span class="value">{{ correctCount }}</span>
+      </div>
+      <div class="score wrong">
+        <span class="label">错误</span>
+        <span class="value">{{ wrongCount }}</span>
+      </div>
+      <div class="score total">
+        <span class="label">正确率</span>
+        <span class="value"
+          >{{ words.length > 0 ? ((correctCount / words.length) * 100).toFixed(0) : 0 }}%</span
+        >
+      </div>
+    </div>
+    <button class="btn-restart" (click)="restart()">重新开始</button>
+  </div>
+
+  <!-- Start Game Screen -->
+  <div class="game-start" *ngIf="!gameStarted && !gameFinished">
+    <h1>🔤 拼写游戏</h1>
+    <p>听单词发音，拖动字母拼出正确的单词</p>
+    <button class="btn-start" (click)="startGame()">开始游戏</button>
+  </div>
+
+  <!-- Game Playing Screen -->
+  <div class="game-playing" *ngIf="!gameFinished && gameStarted" cdkDropListGroup>
+    <div class="progress-bar">
+      <span>进度: {{ progress }}</span>
+    </div>
+
+    <div class="card">
+      <!-- Current Word Display -->
+      <div class="word-display">
+        <!-- <h2>{{ currentWord }}</h2> -->
+        <button class="audio-btn" (click)="wordAudio.play()">🔊</button>
+        <audio
+          #wordAudio
+          [src]="'bookcase/power_up_level_0/audio/' + currentWord + '.mp3'"
+          autoplay
+        ></audio>
+      </div>
+
+      <!-- Letter Slots (Drop Zone) -->
+      <div class="letter-slots">
+        <div
+          *ngFor="let slot of letterSlots; let i = index"
+          class="slot"
+          [class.filled]="slot.filled"
+          [class.correct]="showResult && userAnswer[i] === currentWord[i]"
+          [class.wrong]="showResult && slot.filled && userAnswer[i] !== currentWord[i]"
+          cdkDropList
+          [cdkDropListData]="[slot.letter]"
+          (cdkDropListDropped)="dropToSlot($event, i)"
+          (click)="removeFromSlot(i)"
+        >
+          {{ slot.letter }}
+        </div>
+      </div>
+
+      <!-- Scrambled Letters (Drag Source) -->
+      <div class="scrambled-letters" cdkDropList [cdkDropListData]="scrambledLetters">
+        <div *ngFor="let letter of scrambledLetters" class="letter" cdkDrag>
+          {{ letter }}
+          <div class="letter-placeholder" *cdkDragPlaceholder></div>
+        </div>
+      </div>
+
+      <!-- Result Display -->
+      <div class="result" *ngIf="showResult">
+        <span *ngIf="isCorrect" class="correct-msg">✅ 正确!</span>
+        <span *ngIf="!isCorrect" class="wrong-msg">❌ 错误! 正确答案: {{ currentWord }}</span>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="actions">
+        <button
+          *ngIf="!showResult"
+          class="btn-confirm"
+          [disabled]="!allSlotsFilled"
+          (click)="confirm()"
+        >
+          确认
+        </button>
+        <button *ngIf="showResult" class="btn-next" (click)="nextWord()">下一个</button>
+      </div>
+    </div>
+
+    <!-- Current Score -->
+    <div class="current-score">
+      <span class="correct">✅ {{ correctCount }}</span>
+      <span class="wrong">❌ {{ wrongCount }}</span>
+    </div>
+  </div>
+</div>

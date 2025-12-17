@@ -29,10 +29,13 @@ const angularApp = new AngularNodeAppEngine();
  */
 app.use(
   express.static(browserDistFolder, {
-    maxAge: '1y',
+    cacheControl: false,
     index: false,
     redirect: false,
-  }),
+    setHeaders: (res) => {
+      res.setHeader('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate');
+    },
+  })
 );
 
 /**
@@ -41,9 +44,7 @@ app.use(
 app.use((req, res, next) => {
   angularApp
     .handle(req)
-    .then((response) =>
-      response ? writeResponseToNodeResponse(response, res) : next(),
-    )
+    .then((response) => (response ? writeResponseToNodeResponse(response, res) : next()))
     .catch(next);
 });
 

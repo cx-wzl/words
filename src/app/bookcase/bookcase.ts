@@ -1,20 +1,28 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 
+interface BookInfo {
+  title: string;
+  subTitle: string;
+  image: string;
+}
+
 @Component({
   selector: 'app-bookcase',
+  imports: [MatCardModule, MatButtonModule],
   templateUrl: './bookcase.html',
   styleUrls: ['./bookcase.scss'],
-  imports: [MatCardModule, MatButtonModule],
 })
 export class Bookcase implements OnInit {
-  private readonly httpClient = Inject(HttpClient);
-  private readonly bookcaseUrl: string = 'assets/bookcase.json';
+  private readonly http = inject(HttpClient);
+  books = signal<BookInfo[]>([]);
+
   ngOnInit(): void {
-    this.httpClient.get(this.bookcaseUrl).subscribe((response: any) => {
-      console.log(response);
+    const imageUrl = 'bookcase/bookcase.json';
+    this.http.get<BookInfo[]>(imageUrl).subscribe((resp) => {
+      this.books.set(resp);
     });
   }
 }
