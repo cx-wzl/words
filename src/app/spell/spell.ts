@@ -16,7 +16,7 @@ interface LetterSlot {
 
 @Component({
   selector: 'app-spell',
-  imports: [CommonModule, CdkDrag, CdkDropList, CdkDropListGroup, CdkDragPlaceholder],
+  imports: [CdkDrag, CdkDropList, CdkDropListGroup, CdkDragPlaceholder],
   templateUrl: './spell.html',
   styleUrls: ['./spell.scss'],
 })
