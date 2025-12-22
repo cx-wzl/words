@@ -1,12 +1,12 @@
 import { Routes } from '@angular/router';
-import { Bookcase } from './bookcase/bookcase';
-import { Spell } from './spell/spell';
+import { Bookcase } from './teacher/bookcase/bookcase';
+import { Spell } from './student/spell/spell';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'spell', pathMatch: 'full' },
-  { path: 'spell', component: Spell },
+  { path: '', redirectTo: 'student/spell', pathMatch: 'full' },
+  { path: 'student/spell', component: Spell },
   {
-    path: 'bookcase',
+    path: 'teacher/bookcase',
     component: Bookcase,
   },
 ];
