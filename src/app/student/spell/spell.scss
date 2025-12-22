@@ -102,7 +102,88 @@
   p {
     font-size: 1.1rem;
     color: #666;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
+  }
+
+  .word-selection-card {
+    background: #f8f9fa;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 30px;
+    text-align: left;
+
+    h3 {
+      font-size: 1.2rem;
+      color: #333;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .word-tree {
+      background: transparent;
+
+      .tree-node {
+        display: flex;
+        align-items: center;
+        padding: 8px 0;
+
+        &.unit-node {
+          font-weight: 600;
+          font-size: 1rem;
+        }
+
+        &.lesson-node {
+          font-size: 0.95rem;
+          padding-left: 32px;
+
+          .spacer {
+            width: 40px;
+          }
+        }
+      }
+
+      .tree-children {
+        display: none;
+        padding-left: 24px;
+
+        &.expanded {
+          display: block;
+        }
+      }
+
+      .word-count-badge {
+        margin-left: auto;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: 500;
+
+        &.small {
+          background: #e2e3f3;
+          color: #667eea;
+          padding: 3px 10px;
+          font-size: 0.8rem;
+        }
+      }
+    }
+
+    .selection-summary {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #e0e0e0;
+      text-align: center;
+      font-size: 1rem;
+      color: #666;
+
+      strong {
+        color: #667eea;
+        font-size: 1.2rem;
+      }
+    }
   }
 
   .btn-start {
@@ -115,13 +196,18 @@
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
 
-    &:hover {
+    &:hover:not(:disabled) {
       transform: translateY(-3px);
       box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
     }
 
-    &:active {
+    &:active:not(:disabled) {
       transform: translateY(-1px);
+    }
+
+    &:disabled {
+      background: #ccc;
+      cursor: not-allowed;
     }
   }
 }

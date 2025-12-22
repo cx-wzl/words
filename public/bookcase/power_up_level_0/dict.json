@@ -1,34 +1,192 @@
 [
-  "bird",
-  "boat",
-  "book",
-  "bus",
-  "cat",
-  "man",
-  "woman",
-  "boy",
-  "girl",
-  "family",
-  "mum",
-  "dad",
-  "brother",
-  "sister",
-  "pet",
-  "home",
-  "time",
-  "school",
-  "sit",
-  "friend",
-  "grandpa",
-  "grandma",
-  "bag",
-  "classroom",
-  "pencil",
-  "playground",
-  "teacher",
-  "board",
-  "bookcase",
-  "chair",
-  "cupboard",
-  "table"
+  {
+    "word": "bird",
+    "lesson": 1,
+    "unit": 1
+  },
+  {
+    "word": "boat",
+    "lesson": 1,
+    "unit": 1
+  },
+  {
+    "word": "book",
+    "lesson": 1,
+    "unit": 1
+  },
+  {
+    "word": "bus",
+    "lesson": 1,
+    "unit": 1
+  },
+  {
+    "word": "cat",
+    "lesson": 1,
+    "unit": 1
+  },
+  {
+    "word": "man",
+    "lesson": 2,
+    "unit": 1
+  },
+  {
+    "word": "woman",
+    "lesson": 2,
+    "unit": 1
+  },
+  {
+    "word": "boy",
+    "lesson": 2,
+    "unit": 1
+  },
+  {
+    "word": "girl",
+    "lesson": 2,
+    "unit": 1
+  },
+  {
+    "word": "family",
+    "lesson": 2,
+    "unit": 1
+  },
+  {
+    "word": "mum",
+    "lesson": 3,
+    "unit": 1
+  },
+  {
+    "word": "dad",
+    "lesson": 3,
+    "unit": 1
+  },
+  {
+    "word": "brother",
+    "lesson": 3,
+    "unit": 1
+  },
+  {
+    "word": "sister",
+    "lesson": 3,
+    "unit": 1
+  },
+  {
+    "word": "pet",
+    "lesson": 3,
+    "unit": 1
+  },
+  {
+    "word": "home",
+    "lesson": 4,
+    "unit": 1
+  },
+  {
+    "word": "time",
+    "lesson": 4,
+    "unit": 1
+  },
+  {
+    "word": "school",
+    "lesson": 4,
+    "unit": 1
+  },
+  {
+    "word": "sit",
+    "lesson": 4,
+    "unit": 1
+  },
+  {
+    "word": "friend",
+    "lesson": 4,
+    "unit": 1
+  },
+  {
+    "word": "grandpa",
+    "lesson": 5,
+    "unit": 1
+  },
+  {
+    "word": "grandma",
+    "lesson": 5,
+    "unit": 1
+  },
+  {
+    "word": "bag",
+    "lesson": 6,
+    "unit": 2
+  },
+  {
+    "word": "classroom",
+    "lesson": 6,
+    "unit": 2
+  },
+  {
+    "word": "pencil",
+    "lesson": 6,
+    "unit": 2
+  },
+  {
+    "word": "playground",
+    "lesson": 6,
+    "unit": 2
+  },
+  {
+    "word": "teacher",
+    "lesson": 6,
+    "unit": 2
+  },
+  {
+    "word": "board",
+    "lesson": 7,
+    "unit": 2
+  },
+  {
+    "word": "bookcase",
+    "lesson": 7,
+    "unit": 2
+  },
+  {
+    "word": "chair",
+    "lesson": 7,
+    "unit": 2
+  },
+  {
+    "word": "cupboard",
+    "lesson": 7,
+    "unit": 2
+  },
+  {
+    "word": "table",
+    "lesson": 7,
+    "unit": 2
+  },
+  {
+    "word": "red",
+    "lesson": 8,
+    "unit": 2
+  },
+  {
+    "word": "blue",
+    "lesson": 8,
+    "unit": 2
+  },
+  {
+    "word": "yellow",
+    "lesson": 8,
+    "unit": 2
+  },
+  {
+    "word": "orange",
+    "lesson": 8,
+    "unit": 2
+  },
+  {
+    "word": "green",
+    "lesson": 8,
+    "unit": 2
+  },
+  {
+    "word": "purple",
+    "lesson": 8,
+    "unit": 2
+  }
 ]
