@@ -39,11 +39,7 @@
       <div class="word-display">
         <!-- <h2>{{ currentWord }}</h2> -->
         <button class="audio-btn" (click)="wordAudio.play()">🔊</button>
-        <audio
-          #wordAudio
-          [src]="'bookcase/power_up_level_0/audio/' + currentWord + '.mp3'"
-          autoplay
-        ></audio>
+        <audio #wordAudio [src]="'audio/' + currentWord + '.mp3'" autoplay></audio>
       </div>
 
       <!-- Letter Slots (Drop Zone) -->
