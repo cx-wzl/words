@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 
@@ -14,6 +14,7 @@ interface BookInfo {
   imports: [MatCardModule, MatButtonModule],
   templateUrl: './bookcase.html',
   styleUrls: ['./bookcase.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class Bookcase implements OnInit {
   private readonly http = inject(HttpClient);

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewEncapsulation } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
   CdkDragDrop,
@@ -34,6 +34,7 @@ interface LetterSlot {
   ],
   templateUrl: './spell.html',
   styleUrls: ['./spell.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class Spell implements OnInit {
   private readonly http = inject(HttpClient);

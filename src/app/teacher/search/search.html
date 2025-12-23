@@ -1,0 +1,21 @@
+<div class="search-content">
+  <input
+    type="search"
+    class="search-input"
+    (input)="onSearchInput()"
+    (keydown.enter)="onSearchEnter($event)"
+  />
+  <div class="search-audio">
+    @if (word()) {
+    <audio
+      #wordAudio
+      [src]="'https://dict.youdao.com/dictvoice?audio=' + word() + '&type=1'"
+      autoplay
+    ></audio>
+    <button matButton (click)="wordAudio.play()">🔊</button>
+    <button matButton class="search-favorite" (click)="toggleFavorite()">
+      {{ isFavorite() ? '⭐' : '☆' }}
+    </button>
+    }
+  </div>
+</div>
