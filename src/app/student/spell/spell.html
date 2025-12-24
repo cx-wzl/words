@@ -129,8 +129,10 @@
       <div class="result">
         @if(isCorrect) {
         <span class="correct-msg">✅ 正确!</span>
+        <audio src="right.mp3" autoplay></audio>
         } @else {
         <span class="wrong-msg">❌ 错误! 正确答案: {{ currentWord }}</span>
+        <audio src="wrong.mp3" autoplay></audio>
         }
       </div>
       }

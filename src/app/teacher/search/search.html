@@ -2,6 +2,7 @@
   <input
     type="search"
     class="search-input"
+    placeholder="输入单词后按回车搜索..."
     (input)="onSearchInput()"
     (keydown.enter)="onSearchEnter($event)"
   />
@@ -12,10 +13,61 @@
       [src]="'https://dict.youdao.com/dictvoice?audio=' + word() + '&type=1'"
       autoplay
     ></audio>
-    <button matButton (click)="wordAudio.play()">🔊</button>
-    <button matButton class="search-favorite" (click)="toggleFavorite()">
-      {{ isFavorite() ? '⭐' : '☆' }}
-    </button>
+    <button mat-icon-button (click)="wordAudio.play()">🔊</button>
     }
   </div>
+
+  @if (word()) {
+  <div class="bookcase-section">
+    <!-- 单词所在的 bookcase -->
+    <div class="bookcase-group">
+      <h3>📚 已收藏到</h3>
+      @if (wordInBookcases().length === 0) {
+      <p class="empty-hint">该单词未被收藏到任何词书中</p>
+      } @else {
+      <div class="bookcase-chips">
+        @for (bc of wordInBookcases(); track bc.folder) {
+        <div class="bookcase-chip in-bookcase">
+          <span class="chip-label">{{ bc.title }} - {{ bc.subTitle }}</span>
+          <button
+            mat-icon-button
+            class="chip-action remove"
+            (click)="removeFromBookcase(bc)"
+            title="从此词书移除"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        }
+      </div>
+      }
+    </div>
+
+    <!-- 可添加的 bookcase -->
+    <div class="bookcase-group">
+      <h3>➕ 可添加到</h3>
+      @if (wordNotInBookcases().length === 0) {
+      <p class="empty-hint">该单词已存在于所有词书中</p>
+      } @else {
+      <div class="bookcase-chips">
+        @for (bc of wordNotInBookcases(); track bc.folder) {
+        <div class="bookcase-chip not-in-bookcase">
+          <span class="chip-label">{{ bc.title }} - {{ bc.subTitle }}</span>
+          <button
+            mat-icon-button
+            class="chip-action add"
+            (click)="addToBookcase(bc)"
+            title="添加到此词书"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+        }
+      </div>
+      }
+    </div>
+  </div>
+  } @if (loading()) {
+  <div class="loading">加载中...</div>
+  }
 </div>

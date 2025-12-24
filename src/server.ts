@@ -24,6 +24,95 @@ const angularApp = new AngularNodeAppEngine();
  * ```
  */
 
+import { readFile, writeFile } from 'node:fs/promises';
+
+// 获取所有 bookcase 列表（带路径信息）
+app.get('/api/bookcases', async (req, res) => {
+  try {
+    const bookcaseJsonPath = join(browserDistFolder, 'bookcase/bookcase.json');
+    const data = await readFile(bookcaseJsonPath, 'utf-8');
+    const bookcases = JSON.parse(data);
+
+    // 从 image 路径中提取 folder 名称
+    const bookcasesWithPath = bookcases.map(
+      (book: { title: string; subTitle: string; image: string }) => {
+        const imagePath = book.image;
+        // image 格式: "bookcase/power_up_level_0/image.png"
+        const folder = imagePath.split('/')[1];
+        return { ...book, folder };
+      }
+    );
+
+    res.json(bookcasesWithPath);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to load bookcases' });
+  }
+});
+
+// 获取指定 bookcase 的单词列表
+app.get('/api/bookcase-words/:folder', async (req, res) => {
+  try {
+    const folder = req.params.folder;
+    const dictPath = join(browserDistFolder, `bookcase/${folder}/dict.json`);
+    const data = await readFile(dictPath, 'utf-8');
+    res.json(JSON.parse(data));
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to load words' });
+  }
+});
+
+// 添加单词到指定 bookcase
+app.use(express.json());
+
+app.post('/api/bookcase-words/:folder/add', async (req, res) => {
+  try {
+    const folder = req.params.folder;
+    const { word, lesson = 1, unit = 1 } = req.body;
+    const dictPath = join(browserDistFolder, `bookcase/${folder}/dict.json`);
+
+    const data = await readFile(dictPath, 'utf-8');
+    const words = JSON.parse(data);
+
+    // 检查单词是否已存在
+    const exists = words.some((w: { word: string }) => w.word.toLowerCase() === word.toLowerCase());
+    if (exists) {
+      return res.status(400).json({ error: 'Word already exists' });
+    }
+
+    words.push({ word, lesson, unit });
+    await writeFile(dictPath, JSON.stringify(words, null, 2));
+
+    return res.json({ success: true });
+  } catch (error) {
+    return res.status(500).json({ error: 'Failed to add word' });
+  }
+});
+
+// 从指定 bookcase 删除单词
+app.post('/api/bookcase-words/:folder/remove', async (req, res) => {
+  try {
+    const folder = req.params.folder;
+    const { word } = req.body;
+    const dictPath = join(browserDistFolder, `bookcase/${folder}/dict.json`);
+
+    const data = await readFile(dictPath, 'utf-8');
+    let words = JSON.parse(data);
+
+    const initialLength = words.length;
+    words = words.filter((w: { word: string }) => w.word.toLowerCase() !== word.toLowerCase());
+
+    if (words.length === initialLength) {
+      return res.status(404).json({ error: 'Word not found' });
+    }
+
+    await writeFile(dictPath, JSON.stringify(words, null, 2));
+
+    return res.json({ success: true });
+  } catch (error) {
+    return res.status(500).json({ error: 'Failed to remove word' });
+  }
+});
+
 /**
  * Serve static files from /browser
  */

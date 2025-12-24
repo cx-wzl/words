@@ -16,3 +16,13 @@ export interface UnitNode {
   unit: number;
   lessons: LessonNode[];
 }
+
+export interface BookInfo {
+  title: string;
+  subTitle: string;
+  image: string;
+}
+
+export interface BookInfoWithPath extends BookInfo {
+  folder: string; // bookcase 文件夹名，如 "power_up_level_0"
+}
