@@ -188,5 +188,30 @@
     "word": "purple",
     "lesson": 8,
     "unit": 2
+  },
+  {
+    "word": "apple",
+    "lesson": 9,
+    "unit": 3
+  },
+  {
+    "word": "banana",
+    "lesson": 9,
+    "unit": 3
+  },
+  {
+    "word": "grapes",
+    "lesson": 9,
+    "unit": 3
+  },
+  {
+    "word": "orange",
+    "lesson": 9,
+    "unit": 3
+  },
+  {
+    "word": "watermelon",
+    "lesson": 9,
+    "unit": 3
   }
 ]
