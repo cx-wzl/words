@@ -3,20 +3,17 @@ import { Bookcase } from './teacher/bookcase/bookcase';
 import { Main } from './main/main';
 import { Spell } from './student/spell/spell';
 import { Search } from './teacher/search/search';
+import { Library } from './student/library/library';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'student/spell',
+    redirectTo: 'student/main',
     pathMatch: 'full',
   },
-  {
-    path: '',
-    component: Main,
-    children: [
-      { path: 'student/spell', component: Spell },
-      { path: 'teacher/bookcase', component: Bookcase },
-      { path: 'teacher/search', component: Search },
-    ],
-  },
+  { path: 'student/main', component: Main },
+  { path: 'student/spell', component: Spell },
+  { path: 'student/library', component: Library },
+  { path: 'teacher/bookcase', component: Bookcase },
+  { path: 'teacher/search', component: Search },
 ];

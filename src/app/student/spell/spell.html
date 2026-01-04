@@ -9,9 +9,9 @@
     <div class="spell-game">
       <div class="spell-process">Process: {{ process() }}</div>
       @let currentWordVal = currentWord();
-      <div class="spell-word">
+      <div cdkDropListGroup class="spell-word">
         <div class="word-display">
-          <label>当前单词: {{ currentWordVal }}</label>
+          <!-- <label>当前单词: {{ currentWordVal }}</label> -->
           <!-- <button matIconButton class="play-btn" (click)="wordAudio.play()">🔊</button> -->
           <!-- <audio
             #wordAudio
@@ -19,57 +19,65 @@
             autoplay
           ></audio> -->
         </div>
-        <div cdkDropListGroup>
+        <div>
           <div class="drop-letters">
-            @for (letter of dropLetters; track letter; let i = $index) {
+            @for (solt of dropLetterSlots; track solt; let i = $index) {
               <div
                 cdkDropList
-                [cdkDropListData]="dropLetters"
+                #dropLetterList="cdkDropList"
+                [cdkDropListData]="{ slots: dropLetterSlots, value: solt.letter, index: i }"
+                [cdkDropListEnterPredicate]="dropLetterSlotsPredicate"
                 (cdkDropListDropped)="drop($event, i)"
+                (click)="clearLetter(i)"
                 class="letter"
               >
-                {{ letter }}
+                {{ solt.letter }}
               </div>
             }
           </div>
           <div
             cdkDropList
-            [cdkDropListData]="dragLetters"
+            #dragLetterList="cdkDropList"
+            [cdkDropListData]="{ slots: dragLetterSlots }"
             (cdkDropListDropped)="drop($event, -1)"
             class="drag-letters"
           >
-            @for (letter of dragLetters; track letter; let i = $index) {
+            @for (solt of dragLetterSlots; track solt; let i = $index) {
               <div cdkDrag class="letter">
-                <!-- <div class="letter-placeholder" *cdkDragPlaceholder></div> -->
-                {{ letter }}
+                {{ solt.letter }}
               </div>
             }
           </div>
         </div>
-        <!-- @if(showResult) {
-      <div class="word-result">
-        @if(isCorrect) {
-        <span class="correct-msg">✅ 正确!</span>
-        <audio src="right.mp3" autoplay></audio>
-        } @else {
-        <span class="wrong-msg">❌ 错误! 正确答案: {{ currentWord }}</span>
-        <audio src="wrong.mp3" autoplay></audio>
+        @if (showResult()) {
+          <div>
+            @if (isCorrect()) {
+              <span class="correct">✅ 正确!</span>
+              <audio src="right.mp3" autoplay></audio>
+            } @else {
+              <span class="error">❌ 错误! 正确答案: {{ currentWordVal }}</span>
+              <audio src="error.mp3" autoplay></audio>
+            }
+          </div>
         }
+        <div>
+          @if (showResult()) {
+            <button matButton="filled" (click)="nextWord()">Next</button>
+          } @else {
+            <button
+              matButton="filled"
+              [disabled]="dragLetterSlots.length > 0"
+              (click)="checkWord()"
+            >
+              Check
+            </button>
+          }
+        </div>
       </div>
-      } -->
-
-        <!-- <div class="actions">
-        @if(showResult) {
-        <button class="btn-next" (click)="nextWord()">下一个</button>
-        } @else {
-        <button class="btn-confirm" [disabled]="!allSlotsFilled" (click)="confirm()">确认</button>
-        }
-      </div> -->
+      <div class="spell-score">
+        <span class="correct">✅ {{ correctCount() }}</span>
+        <span class="wrong">❌ {{ errorCount() }}</span>
       </div>
-      <!-- <div class="spell-score">
-    <span class="correct">✅ {{ correctCount }}</span>
-    <span class="wrong">❌ {{ wrongCount }}</span>
-  </div> -->
     </div>
   }
   @case ('result') {
