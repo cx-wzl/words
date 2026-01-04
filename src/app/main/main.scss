@@ -1,9 +1,36 @@
+app-main {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+  padding: 2rem;
+}
+
+.menu {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .menu-item {
   cursor: pointer;
-  padding: 10px;
-  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #e0e0e0;
   margin: 5px;
   width: 10rem;
   height: 10rem;
   border-radius: 1rem;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 500;
+  box-shadow: 0 2px 4px #0000004b;
+}
+
+.blue {
+  background-color: #007bff;
+}
+
+.oracle {
+  background-color: #ff8400;
 }

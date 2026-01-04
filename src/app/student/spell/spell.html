@@ -12,12 +12,12 @@
       <div cdkDropListGroup class="spell-word">
         <div class="word-display">
           <!-- <label>当前单词: {{ currentWordVal }}</label> -->
-          <!-- <button matIconButton class="play-btn" (click)="wordAudio.play()">🔊</button> -->
-          <!-- <audio
+          <button matIconButton class="play-btn" (click)="wordAudio.play()">🔊</button>
+          <audio
             #wordAudio
             [src]="'https://dict.youdao.com/dictvoice?audio=' + currentWordVal + '&type=1'"
             autoplay
-          ></audio> -->
+          ></audio>
         </div>
         <div>
           <div class="drop-letters">
@@ -52,10 +52,10 @@
         @if (showResult()) {
           <div>
             @if (isCorrect()) {
-              <span class="correct">✅ 正确!</span>
+              <span class="correct">✅ Correct!</span>
               <audio src="right.mp3" autoplay></audio>
             } @else {
-              <span class="error">❌ 错误! 正确答案: {{ currentWordVal }}</span>
+              <span class="error">❌ Error! Correct answer: {{ currentWordVal }}</span>
               <audio src="error.mp3" autoplay></audio>
             }
           </div>
@@ -75,8 +75,8 @@
         </div>
       </div>
       <div class="spell-score">
-        <span class="correct">✅ {{ correctCount() }}</span>
-        <span class="wrong">❌ {{ errorCount() }}</span>
+        <span class="correct">✅ {{ correctList().length }}</span>
+        <span class="wrong">❌ {{ errorList().length }}</span>
       </div>
     </div>
   }
