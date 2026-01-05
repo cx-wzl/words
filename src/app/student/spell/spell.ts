@@ -46,14 +46,34 @@ export class Spell implements OnInit {
     this.http
       .get<Array<Word>>('bookcase/power_up_level_0/dict.json')
       .subscribe((dict: Array<Word>) => {
-        this.fullDict = dict;
-        this.words = [...dict.filter((word) => !word.kill)].sort(() => Math.random() - 0.5);
+        this.fullDict = structuredClone(dict);
       });
   }
 
   protected startGame(): void {
+    this.words = [...this.fullDict.filter((word) => !word.kill)].sort(() => Math.random() - 0.5);
     this.setNewWord();
     this.card.set('spell');
+  }
+
+  protected audioClick() {
+    this.audioPlay(`audio/${this.currentWord()?.word}.mp3`);
+  }
+
+  protected audioPlay(url: string) {
+    const context = new AudioContext();
+    this.http
+      .get(url, {
+        responseType: 'arraybuffer',
+      })
+      .subscribe((buffer) => {
+        context.decodeAudioData(buffer, (decoded) => {
+          const source = context.createBufferSource();
+          source.buffer = decoded;
+          source.connect(context.destination);
+          source.start();
+        });
+      });
   }
 
   protected clearLetter(index: number): void {
@@ -90,6 +110,7 @@ export class Spell implements OnInit {
     this.isCorrect.set(isCorrect);
     (isCorrect ? this.correctList : this.errorList).update((list) => [...list, currentWordVal]);
     this.showResult.set(true);
+    setTimeout(() => this.audioPlay(isCorrect ? 'right.mp3' : 'error.mp3'));
   }
 
   protected nextWord() {
@@ -108,5 +129,6 @@ export class Spell implements OnInit {
     const total = this.fullDict.length;
     const count = this.fullDict.length - this.words.length;
     this.process.set(`${count} / ${total}`);
+    setTimeout(() => this.audioPlay(`audio/${currentWordVal.word}.mp3`));
   }
 }

@@ -78,17 +78,3 @@ app-spell {
 .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
-
-// 拖拽预览样式 - 拖拽时元素被添加到 body，需要单独定义样式
-// .cdk-drag-preview.letter {
-//   width: 2rem;
-//   height: 2rem;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   border-radius: 0.25rem;
-//   border: 2px solid #c2c2c2;
-//   background-color: #f2f2f2;
-//   cursor: grabbing;
-//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-// }
