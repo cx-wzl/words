@@ -89,6 +89,21 @@
     </div>
   }
   @case ('result') {
-    <div class="spell-result"></div>
+    <div class="spell-result">
+      <h1>🎉 Game Over</h1>
+      <div class="result-score">
+        <div class="correct">
+          <span>Correct</span><span>{{ correctList().length }}</span>
+        </div>
+        <div class="error">
+          <span>Error</span><span>{{ errorList().length }}</span>
+        </div>
+        <div class="accuracy">
+          <span>Accuracy</span><span>{{ getAccuracy() }}</span>
+        </div>
+      </div>
+      <button class="spell-btn" matButton="filled" (click)="startGame()">Restart</button>
+      <!-- <button class="spell-btn" matButton="tonal" (click)="report()">Report</button> -->
+    </div>
   }
 }

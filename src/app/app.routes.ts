@@ -6,7 +6,7 @@ import { Spell } from './student/spell/spell';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'student/main',
+    redirectTo: 'student/spell',
     pathMatch: 'full',
   },
   { path: 'student/main', component: Main },

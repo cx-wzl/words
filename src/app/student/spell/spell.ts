@@ -54,7 +54,10 @@ export class Spell implements OnInit {
   }
 
   protected startGame(): void {
-    this.words = [...this.fullDict.filter((word) => !word.kill)].sort(() => Math.random() - 0.5);
+    this.correctList.set([]);
+    this.errorList.set([]);
+    // this.words = [...this.fullDict.filter((word) => !word.kill)].sort(() => Math.random() - 0.5);
+    this.words.push(this.fullDict[0], this.fullDict[1]);
     this.setNewWord();
     this.card.set('spell');
   }
@@ -118,7 +121,11 @@ export class Spell implements OnInit {
 
   protected nextWord() {
     this.showResult.set(false);
-    this.setNewWord();
+    if (this.total() === this.count()) {
+      this.card.set('result');
+    } else {
+      this.setNewWord();
+    }
   }
 
   private setNewWord() {
@@ -137,4 +144,10 @@ export class Spell implements OnInit {
   protected getProgressValue(): number {
     return Math.floor((this.count() / this.total()) * 100);
   }
+
+  protected getAccuracy(): string {
+    return Math.floor((this.correctList().length / this.total()) * 100) + '%';
+  }
+
+  protected report() {}
 }
