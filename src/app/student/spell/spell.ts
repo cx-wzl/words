@@ -56,8 +56,7 @@ export class Spell implements OnInit {
   protected startGame(): void {
     this.correctList.set([]);
     this.errorList.set([]);
-    // this.words = [...this.fullDict.filter((word) => !word.kill)].sort(() => Math.random() - 0.5);
-    this.words.push(this.fullDict[0], this.fullDict[1]);
+    this.words = [...this.fullDict.filter((word) => !word.kill)].sort(() => Math.random() - 0.5);
     this.setNewWord();
     this.card.set('spell');
   }
