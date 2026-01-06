@@ -4,6 +4,7 @@ import { Component, inject, OnInit, signal, ViewEncapsulation } from '@angular/c
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTreeModule } from '@angular/material/tree';
 import { LetterSlot, Word } from '../../type/types';
 
@@ -17,6 +18,7 @@ import { LetterSlot, Word } from '../../type/types';
     MatCheckboxModule,
     MatIconModule,
     MatButtonModule,
+    MatProgressBarModule,
   ],
   templateUrl: './spell.html',
   styleUrls: ['./spell.scss'],
@@ -26,7 +28,6 @@ export class Spell implements OnInit {
   private readonly http = inject(HttpClient);
 
   protected card = signal<'start' | 'spell' | 'result'>('start');
-  protected process = signal('');
   protected currentWord = signal<Word | null>(null);
   protected dropLetterSlots: LetterSlot[] = [];
   protected dragLetterSlots: LetterSlot[] = [];
@@ -34,6 +35,8 @@ export class Spell implements OnInit {
   protected isCorrect = signal(false);
   protected correctList = signal<Word[]>([]);
   protected errorList = signal<Word[]>([]);
+  protected total = signal(0);
+  protected count = signal(0);
 
   private fullDict: Word[] = [];
   private words: Array<Word> = [];
@@ -126,9 +129,12 @@ export class Spell implements OnInit {
       .sort(() => Math.random() - 0.5)
       .map((letter) => ({ letter }));
     this.dropLetterSlots = currentWordVal.word.split('').map(() => ({ letter: '' }));
-    const total = this.fullDict.length;
-    const count = this.fullDict.length - this.words.length;
-    this.process.set(`${count} / ${total}`);
+    this.total.set(this.fullDict.length);
+    this.count.set(this.fullDict.length - this.words.length);
     setTimeout(() => this.audioPlay(`audio/${currentWordVal.word}.mp3`));
+  }
+
+  protected getProgressValue(): number {
+    return Math.floor((this.count() / this.total()) * 100);
   }
 }

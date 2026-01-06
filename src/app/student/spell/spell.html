@@ -7,14 +7,23 @@
   }
   @case ('spell') {
     <div class="spell-game">
-      <div class="spell-process">Process: {{ process() }}</div>
+      <div class="spell-process">
+        <span class="process-title">PROCESS</span>
+        <div class="process-count">
+          <span>{{ count() }}</span> / {{ total() }}
+        </div>
+        <div class="progress-bar">
+          <mat-progress-bar mode="determinate" [value]="getProgressValue()"></mat-progress-bar>
+        </div>
+      </div>
       @let currentWordVal = currentWord();
       <div cdkDropListGroup class="spell-word">
         <div class="word-display">
-          <!-- <label>当前单词: {{ currentWordVal }}</label> -->
-          <button matIconButton class="play-btn" (click)="audioClick()">🔊</button>
+          <button matButton="tonal" class="play-btn" aria-label="Play audio" (click)="audioClick()">
+            <mat-icon class="play-btn-icon" fontSet="material-symbols-outlined">volume_up</mat-icon>
+          </button>
         </div>
-        <div>
+        <div class="word-content">
           <div class="drop-letters">
             @for (solt of dropLetterSlots; track solt; let i = $index) {
               <div
@@ -24,7 +33,8 @@
                 [cdkDropListEnterPredicate]="dropLetterSlotsPredicate"
                 (cdkDropListDropped)="drop($event, i)"
                 (click)="clearLetter(i)"
-                class="letter"
+                [class.letter]="solt.letter === ''"
+                [class.letter-drop]="solt.letter !== ''"
               >
                 {{ solt.letter }}
               </div>
@@ -44,20 +54,25 @@
             }
           </div>
         </div>
-        @if (showResult()) {
-          <div>
+        <div class="spell-check-msg">
+          @if (showResult()) {
             @if (isCorrect()) {
-              <span class="correct">✅ Correct!</span>
+              <span class="correct">✅ That's correct.</span>
             } @else {
-              <span class="error">❌ Error! Correct answer: {{ currentWordVal }}</span>
+              <span class="error"
+                >❌ That's incorrect. The correct answer is
+                <span class="error-word">{{ currentWordVal!.word }}</span
+                >.</span
+              >
             }
-          </div>
-        }
+          }
+        </div>
         <div>
           @if (showResult()) {
-            <button matButton="filled" (click)="nextWord()">Next</button>
+            <button class="spell-btn" matButton="filled" (click)="nextWord()">Next</button>
           } @else {
             <button
+              class="spell-btn"
               matButton="filled"
               [disabled]="dragLetterSlots.length > 0"
               (click)="checkWord()"
@@ -69,7 +84,7 @@
       </div>
       <div class="spell-score">
         <span class="correct">✅ {{ correctList().length }}</span>
-        <span class="wrong">❌ {{ errorList().length }}</span>
+        <span class="error">❌ {{ errorList().length }}</span>
       </div>
     </div>
   }

@@ -9,15 +9,90 @@ app-spell {
   overflow: hidden;
 }
 
+.spell-game {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.spell-process {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 20%;
+}
+
+.spell-word {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.play-btn.mat-tonal-button {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 50%;
+  > .mat-icon {
+    margin: 0;
+  }
+}
+
+.play-btn-icon {
+  font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
+  transform: scale(3);
+}
+
+.process-title {
+  font-weight: 600;
+  color: var(--mat-sys-secondary);
+  margin-bottom: 0.725rem;
+}
+
+.process-count {
+  > span {
+    font-size: 1.5rem;
+    color: var(--mat-sys-primary);
+  }
+  margin-bottom: 0.725rem;
+}
+
+.progress-bar {
+  width: 15rem;
+}
+
 .spell-start {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
+  > button {
+    width: 15rem;
+    &.mat-mdc-button-base {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+  }
 }
 
 .spell-process {
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.word-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -27,48 +102,52 @@ app-spell {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  height: 3rem;
+  line-height: 5rem;
+  min-height: 5rem;
 }
 
-.letter {
-  width: 2rem;
-  height: 2rem;
+.letter,
+.letter-drop,
+.letter-placeholder,
+.cdk-drag-preview {
+  width: 3rem;
+  height: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 600;
   cursor: pointer;
 }
 
-.drop-letters > .letter {
-  border: 2px dotted #c2c2c2;
+.drop-letters {
+  > .letter {
+    border: 2px dashed #c2c2c2;
+  }
+
+  > .letter-drop {
+    border: 2px solid #c2c2c2;
+    background-color: var(--mat-sys-secondary-container);
+  }
 }
 
-.drag-letters > .letter {
-  border: 2px solid #c2c2c2;
-  background-color: #f2f2f2;
+.drag-letters {
+  background-color: var(--mat-sys-background);
+  border-radius: 0.5rem;
+  > .letter {
+    border: 2px solid #c2c2c2;
+    background-color: var(--mat-sys-secondary-container);
+  }
 }
 
-.letter-placeholder {
-  width: 2rem;
-  height: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 0.25rem;
+.letter-placeholder,
+.cdk-drag-preview {
   border: 2px solid #c2c2c2;
-  background-color: #f2f2f2;
+  background-color: var(--mat-sys-secondary-container);
 }
 
 .cdk-drag-preview {
-  width: 2rem;
-  height: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 0.25rem;
-  border: 2px solid #c2c2c2;
-  background-color: #f2f2f2;
   box-shadow:
     0 5px 5px -3px rgba(0, 0, 0, 0.2),
     0 8px 10px 1px rgba(0, 0, 0, 0.14),
@@ -77,4 +156,83 @@ app-spell {
 
 .cdk-drag-animating {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.spell-btn {
+  width: 15rem;
+  &.mat-mdc-button-base {
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+}
+
+.spell-check-msg {
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+
+  > .correct {
+    color: #198754;
+  }
+
+  > .error {
+    color: var(--mat-sys-error);
+    > .error-word {
+      font-size: 1.1rem;
+      color: var(--mat-sys-on-surface);
+    }
+  }
+}
+
+.spell-score {
+  height: 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.1rem;
+}
+
+@media screen and (max-height: 720px) {
+  .play-btn.mat-tonal-button {
+    min-width: 2rem !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    padding: 0 !important;
+  }
+  .play-btn-icon {
+    transform: scale(1);
+  }
+  .letter,
+  .letter-drop,
+  .letter-placeholder,
+  .cdk-drag-preview {
+    width: 2rem;
+    height: 2rem;
+    font-size: 1rem;
+  }
+
+  .drop-letters,
+  .drag-letters {
+    line-height: 3rem;
+    min-height: 3rem;
+  }
+
+  .spell-check-msg {
+    height: 2rem;
+    .error-word {
+      font-size: 1rem;
+    }
+  }
+
+  .spell-score {
+    height: 10%;
+    font-size: 1rem;
+  }
+
+  .spell-btn.mat-mdc-button-base {
+    font-size: 1rem;
+  }
 }
