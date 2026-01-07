@@ -280,6 +280,7 @@ app-spell {
 }
 
 .report-words {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -303,8 +304,7 @@ app-spell {
 .four-lines {
   position: relative;
   display: flex;
-  height: 14mm;
-  min-height: 14mm;
+  min-height: 9mm;
 
   .line {
     position: absolute;
@@ -318,12 +318,12 @@ app-spell {
     }
 
     &.mid-line {
-      top: calc(4mm + 1px);
+      top: 3mm;
       border-style: dashed;
     }
 
     &.base-line {
-      bottom: calc(4mm + 1px);
+      bottom: 3mm;
       border-color: #f48fb1;
     }
 
@@ -334,9 +334,9 @@ app-spell {
 
   .word-text {
     position: absolute;
-    top: 3mm;
+    top: 1mm;
     left: 1rem;
-    font-size: 12mm;
+    font-size: 6mm;
   }
 }
 
