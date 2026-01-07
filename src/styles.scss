@@ -6,6 +6,11 @@
 @use '@angular/material' as mat;
 @use '@material-design-icons/font';
 
+@font-face {
+  font-family: 'Teachers';
+  src: url('/font/Teachers/Teachers-VariableFont_wght.ttf') format('truetype');
+}
+
 html {
   @include mat.theme(
     (
@@ -14,17 +19,7 @@ html {
         tertiary: mat.$blue-palette,
       ),
       typography: (
-        -apple-system,
-        BlinkMacSystemFont,
-        'Segoe UI',
-        Roboto,
-        'Helvetica Neue',
-        Arial,
-        'Noto Sans',
-        'PingFang SC',
-        'Hiragino Sans GB',
-        'Microsoft YaHei',
-        sans-serif,
+        Teachers,
       ),
       density: 0,
     )
@@ -55,9 +50,7 @@ body {
 }
 body {
   margin: 0;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',
-    'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+  font-family: Teachers;
 }
 
 * {

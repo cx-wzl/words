@@ -169,19 +169,20 @@ app-spell {
 }
 
 .spell-check-msg {
-  height: 3rem;
+  min-height: 3rem;
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: 600;
+  padding-bottom: 0.25rem;
 
   > .correct {
     color: #198754;
   }
 
-  > .error {
+  > .incorrect {
     color: var(--mat-sys-error);
-    > .error-word {
+    > .incorrect-word {
       font-size: 1.1rem;
       color: var(--mat-sys-on-surface);
     }
@@ -240,15 +241,15 @@ app-spell {
   > .correct {
     background-color: #aafcad;
     > span:last-child {
-      font-size: 3rem;
+      font-size: 2rem;
       color: #198754;
     }
   }
 
-  > .error {
+  > .incorrect {
     background-color: var(--mat-sys-error-container);
     > span:last-child {
-      font-size: 3rem;
+      font-size: 2rem;
       color: var(--mat-sys-error);
     }
   }
@@ -256,9 +257,95 @@ app-spell {
   > .accuracy {
     background-color: var(--mat-sys-secondary-container);
     > span:last-child {
-      font-size: 3rem;
+      font-size: 2rem;
     }
   }
+}
+
+// Spell Report - Four Line Word Display
+.spell-report {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 1.5rem;
+  width: 100%;
+  max-height: 100%;
+
+  > h2 {
+    margin: 0;
+    color: var(--mat-sys-on-surface);
+  }
+}
+
+.report-words {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  flex: 0;
+  overflow-y: auto;
+}
+
+.report-header {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  .report-title {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.four-lines {
+  position: relative;
+  display: flex;
+  height: 14mm;
+  min-height: 14mm;
+
+  .line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    margin: 0;
+
+    &.top-line {
+      top: 0;
+    }
+
+    &.mid-line {
+      top: calc(4mm + 1px);
+      border-style: dashed;
+    }
+
+    &.base-line {
+      bottom: calc(4mm + 1px);
+      border-color: #f48fb1;
+    }
+
+    &.bottom-line {
+      bottom: 0;
+    }
+  }
+
+  .word-text {
+    position: absolute;
+    top: 3mm;
+    left: 1rem;
+    font-size: 12mm;
+  }
+}
+
+.no-errors {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #198754;
+  padding: 2rem;
 }
 
 @media screen and (max-height: 720px) {
@@ -288,7 +375,7 @@ app-spell {
 
   .spell-check-msg {
     height: 2rem;
-    .error-word {
+    .incorrect-word {
       font-size: 1rem;
     }
   }
@@ -300,5 +387,11 @@ app-spell {
 
   .spell-btn.mat-mdc-button-base {
     font-size: 1rem;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
   }
 }

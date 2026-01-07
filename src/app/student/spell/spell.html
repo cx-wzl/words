@@ -59,9 +59,9 @@
             @if (isCorrect()) {
               <span class="correct">✅ That's correct.</span>
             } @else {
-              <span class="error"
+              <span class="incorrect"
                 >❌ That's incorrect. The correct answer is
-                <span class="error-word">{{ currentWordVal!.word }}</span
+                <span class="incorrect-word">{{ currentWordVal!.word }}</span
                 >.</span
               >
             }
@@ -84,26 +84,56 @@
       </div>
       <div class="spell-score">
         <span class="correct">✅ {{ correctList().length }}</span>
-        <span class="error">❌ {{ errorList().length }}</span>
+        <span class="incorrect">❌ {{ incorrectList().length }}</span>
       </div>
     </div>
   }
   @case ('result') {
     <div class="spell-result">
-      <h1>🎉 Game Over</h1>
+      <h1>Game Over</h1>
       <div class="result-score">
         <div class="correct">
           <span>Correct</span><span>{{ correctList().length }}</span>
         </div>
-        <div class="error">
-          <span>Error</span><span>{{ errorList().length }}</span>
+        <div class="incorrect">
+          <span>Incorrect</span><span>{{ incorrectList().length }}</span>
         </div>
         <div class="accuracy">
           <span>Accuracy</span><span>{{ getAccuracy() }}</span>
         </div>
       </div>
       <button class="spell-btn" matButton="filled" (click)="startGame()">Restart</button>
-      <!-- <button class="spell-btn" matButton="tonal" (click)="report()">Report</button> -->
+      @if (incorrectList().length > 0) {
+        <button class="spell-btn" matButton="tonal" (click)="report()">Incorrect Report</button>
+      }
+    </div>
+  }
+  @case ('report') {
+    <div class="spell-report">
+      <div class="report-header">
+        <button class="no-print" matIconButton (click)="card.set('result')">
+          <mat-icon fontSet="material-icons">arrow_back_ios_new</mat-icon>
+        </button>
+        <div class="report-title">
+          <h2>Incorrect Report</h2>
+        </div>
+        <button class="no-print" matIconButton aria-label="Print" (click)="printReport()">
+          <mat-icon fontSet="material-icons">print</mat-icon>
+        </button>
+      </div>
+      <div class="report-words">
+        @for (word of incorrectList(); track word.id) {
+          <div class="four-lines">
+            <hr class="line top-line" />
+            <hr class="line mid-line" />
+            <hr class="line base-line" />
+            <hr class="line bottom-line" />
+            <span class="word-text">{{ word.word }}</span>
+          </div>
+        } @empty {
+          <div class="no-errors">🎉 Correct. Good work.</div>
+        }
+      </div>
     </div>
   }
 }

@@ -1,6 +1,6 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { HttpClient } from '@angular/common/http';
-import { Component, inject, OnInit, signal, ViewEncapsulation } from '@angular/core';
+import { Component, DOCUMENT, inject, OnInit, signal, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
@@ -25,21 +25,22 @@ import { LetterSlot, Word } from '../../type/types';
   encapsulation: ViewEncapsulation.None,
 })
 export class Spell implements OnInit {
-  private readonly http = inject(HttpClient);
-
-  protected card = signal<'start' | 'spell' | 'result'>('start');
+  protected card = signal<'start' | 'spell' | 'result' | 'report'>('start');
   protected currentWord = signal<Word | null>(null);
   protected dropLetterSlots: LetterSlot[] = [];
   protected dragLetterSlots: LetterSlot[] = [];
   protected showResult = signal(false);
   protected isCorrect = signal(false);
   protected correctList = signal<Word[]>([]);
-  protected errorList = signal<Word[]>([]);
+  protected incorrectList = signal<Word[]>([]);
   protected total = signal(0);
   protected count = signal(0);
 
+  private readonly http = inject(HttpClient);
+  private readonly doc = inject(DOCUMENT);
   private fullDict: Word[] = [];
   private words: Array<Word> = [];
+  private audioContext: AudioContext | null = null;
 
   ngOnInit(): void {
     this.initDictionary();
@@ -55,7 +56,7 @@ export class Spell implements OnInit {
 
   protected startGame(): void {
     this.correctList.set([]);
-    this.errorList.set([]);
+    this.incorrectList.set([]);
     this.words = [...this.fullDict.filter((word) => !word.kill)].sort(() => Math.random() - 0.5);
     this.setNewWord();
     this.card.set('spell');
@@ -65,19 +66,42 @@ export class Spell implements OnInit {
     this.audioPlay(`audio/${this.currentWord()?.word}.mp3`);
   }
 
+  private getAudioContext(): AudioContext {
+    if (!this.audioContext) {
+      this.audioContext = new AudioContext();
+    }
+    return this.audioContext;
+  }
+
   protected audioPlay(url: string) {
-    const context = new AudioContext();
+    const context = this.getAudioContext();
+
+    if (context.state === 'suspended') {
+      context.resume();
+    }
+
     this.http
       .get(url, {
         responseType: 'arraybuffer',
       })
-      .subscribe((buffer) => {
-        context.decodeAudioData(buffer, (decoded) => {
-          const source = context.createBufferSource();
-          source.buffer = decoded;
-          source.connect(context.destination);
-          source.start();
-        });
+      .subscribe({
+        next: (buffer) => {
+          context.decodeAudioData(
+            buffer,
+            (decoded) => {
+              const source = context.createBufferSource();
+              source.buffer = decoded;
+              source.connect(context.destination);
+              source.start();
+            },
+            (_error) => {
+              alert('Audio decode failed');
+            },
+          );
+        },
+        error: (_error) => {
+          alert('Audio load failed');
+        },
       });
   }
 
@@ -113,7 +137,7 @@ export class Spell implements OnInit {
     const isCorrect =
       this.dropLetterSlots.map((slot) => slot.letter).join('') === currentWordVal.word;
     this.isCorrect.set(isCorrect);
-    (isCorrect ? this.correctList : this.errorList).update((list) => [...list, currentWordVal]);
+    (isCorrect ? this.correctList : this.incorrectList).update((list) => [...list, currentWordVal]);
     this.showResult.set(true);
     setTimeout(() => this.audioPlay(isCorrect ? 'right.mp3' : 'error.mp3'));
   }
@@ -148,5 +172,11 @@ export class Spell implements OnInit {
     return Math.floor((this.correctList().length / this.total()) * 100) + '%';
   }
 
-  protected report() {}
+  protected report() {
+    this.card.set('report');
+  }
+
+  protected printReport() {
+    this.doc.defaultView?.print();
+  }
 }
