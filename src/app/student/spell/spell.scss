@@ -284,7 +284,6 @@ app-spell {
   flex-direction: column;
   gap: 1.5rem;
   width: 100%;
-  flex: 0;
   overflow-y: auto;
 }
 
@@ -393,5 +392,17 @@ app-spell {
 @media print {
   .no-print {
     display: none !important;
+  }
+
+  .print-area {
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    width: 100% !important;
+    min-height: 100% !important;
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
   }
 }

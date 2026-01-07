@@ -58,6 +58,8 @@ export class Spell implements OnInit {
     this.correctList.set([]);
     this.incorrectList.set([]);
     this.words = [...this.fullDict.filter((word) => !word.kill)].sort(() => Math.random() - 0.5);
+
+    // this.words = [this.fullDict[0], this.fullDict[1], this.fullDict[2], this.fullDict[3]];
     this.setNewWord();
     this.card.set('spell');
   }
