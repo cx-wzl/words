@@ -1,6 +1,6 @@
 {
-  "name": "iWords - 单词学习",
-  "short_name": "iWords",
+  "name": "iLearning - 单词学习",
+  "short_name": "iLearning",
   "description": "一个优雅的单词学习PWA应用",
   "start_url": "/",
   "display": "standalone",

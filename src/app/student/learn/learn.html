@@ -1,0 +1,7 @@
+<div>
+  @if (isRecording()) {
+    <button type="button" (click)="onRecordStop()">Stop</button>
+  } @else {
+    <button type="button" (click)="onRecordStart()">Record</button>
+  }
+</div>
